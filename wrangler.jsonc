@@ -1,0 +1,54 @@
+{
+  // ==========================================================================
+  // Okta MCP Server - Wrangler Configuration
+  // ==========================================================================
+  //
+  // MULTI-TENANT ARCHITECTURE:
+  // This server supports multiple tenants. Credentials are passed via request
+  // headers, NOT stored as wrangler secrets. This allows a single deployment
+  // to serve multiple customers.
+  //
+  // Required Headers:
+  // - X-Okta-Domain: Your Okta domain (e.g., "dev-12345678")
+  // - X-Okta-API-Token: SSWS API token for authentication
+  // ==========================================================================
+
+  "name": "primrose-mcp-okta",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-12-01",
+  "compatibility_flags": ["nodejs_compat"],
+
+  // ==========================================================================
+  // Environment Variables (server-wide configuration, not per-tenant)
+  // ==========================================================================
+  "vars": {
+    "CHARACTER_LIMIT": "50000",
+    "DEFAULT_PAGE_SIZE": "20",
+    "MAX_PAGE_SIZE": "200"
+  },
+
+  // ==========================================================================
+  // Multi-Tenant Authentication (via Request Headers)
+  // ==========================================================================
+  //
+  // Tenant credentials are passed via HTTP headers on each request:
+  //
+  // Required:
+  //   X-Okta-Domain: Your Okta domain (e.g., "dev-12345678" or full URL)
+  //   X-Okta-API-Token: SSWS API token
+  //
+  // Optional:
+  //   X-Okta-Base-URL: Override the default Okta API base URL
+
+  // ==========================================================================
+  // Development
+  // ==========================================================================
+  "dev": {
+    "port": 8787,
+    "local_protocol": "http"
+  },
+
+  "observability": {
+    "enabled": true
+  }
+}
